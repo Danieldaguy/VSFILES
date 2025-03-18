@@ -63,3 +63,11 @@ body {
     font-weight: bold;
     margin-right: 50px;
 }
+
+.title {
+    color: #f5e8f4;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 100px;
+}
