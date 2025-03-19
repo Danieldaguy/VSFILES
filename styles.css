@@ -1,41 +1,73 @@
 body, html {
+    position: relative;
     margin: 0;
     padding: 0;
     height: 100%;
     width: 100%;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #000000;
+    background-color: #8c00ff;
     color: #ffffff;
+}
+
+body {
+    background-image: 
+        radial-gradient(circle, rgba(0, 0, 0, 0.541) 60%, rgb(0, 0, 0) 100%), 
+        url('https://cdn6.f-cdn.com/files/download/82615852/web-dev-ty.jpg?image-optimizer=force&format=webply&width=967');
+    background-size: cover;
+    background-position: center;
+    display: flex; /* Enable Flexbox */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    height: 100vh; /* Full viewport height */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    background-color: #0e000c; /* Fallback background color */
 }
 
 /* Navigation Bar Styles */
 .navbar {
-    background-color: #0b001b;
+    text-align: center;
+    background-color: #070014;
     overflow: hidden;
-    position: fixed;
+    position: fixed; /* Fix the navbar at the top of the screen */
     top: 0; /* Ensure the navbar is at the very top */
-    left: 0;
-    width: 100%;
-    z-index: 1000;
+    left: 0; /* Align it to the left edge */
+    width: 100%; /* Make it span the full width of the screen */
+    z-index: 1000; /* Ensure it stays above other elements */
     border-radius: 0 0 15px 15px;
     border: solid 1.5px #ff04ea;
+    padding: 14px 20px; /* Adjust padding to control height */
 }
 
+/* Navbar Title Styling */
+.navbar .heading {
+    color: #f953ff;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
+    padding: 14px 20px;
+    display: inline-block; /* Align it with the navigation links */
+    text-align: center;
+}
+
+/* Navbar List Styling */
 .navbar ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
+    display: inline-flex; /* Align the list horizontally */
+    vertical-align: middle;
 }
 
 .navbar ul li {
-    align-items: center; /* Vertically align items */
     padding: 14px 20px;
+    display: flex;
+    align-items: center; /* Vertically align items */
 }
 
 .navbar ul li i {
-    font-size: 18px; /* Adjust the size of the icon */
+    font-size: 20px; /* Adjust the size of the icon */
     color: #ff04ea; /* Match the color of the text */
     margin-left: 10px; /* Add spacing between the icon and the text */
     transition: color 0.3s; /* Add a hover effect */
@@ -48,7 +80,7 @@ body, html {
 .navbar ul li a {
     text-decoration: none;
     color: #ff04ea;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     transition: text-shadow 0.3s, transform 0.3s;
 }
@@ -71,5 +103,17 @@ body, html {
     font-size: 40px;
     font-weight: bold;
     text-align: center;
-    margin-top: 80px; /* Push the title below the navbar */
+    margin: 0; /* Remove any default margin */
+    position: relative; /* Required for the pseudo-element */
+    animation: glow 3s infinite alternate; /* Apply the glow animation */
+}
+
+/* Keyframes for the glowing effect */
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 10px #ff00ea;
+    }
+    100% {
+        text-shadow: 0 0 30px #ff00ff;
+    }
 }
