@@ -1,12 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const words = ["Business", "Creativity", "Excellence", "Leadership", "Success"]; // Words to cycle through
     const dynamicText = document.getElementById('dynamic-text');
-    console.log('dynamicText:', dynamicText);
+    if (!dynamicText) {
+        console.error('Error: #dynamic-text not found in the DOM.');
+        return;
+    }
+
     let wordIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
 
     function typeEffect() {
+        const words = ["Business", "Creativity", "Excellence", "Leadership", "Success"];
         const currentWord = words[wordIndex];
         if (isDeleting) {
             dynamicText.textContent = currentWord.substring(0, charIndex--);
@@ -64,48 +68,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const plansContainer = document.getElementById('plans-container');
+    if (!plansContainer) {
+        console.error('Error: #plans-container not found in the DOM.');
+        return;
+    }
 
-    // Store the JSON data directly in the JavaScript
     const plans = [
-        {
-            "name": "Starter Package",
-            "price": "$10",
-            "features": ["1 - 2 Page Design", "Responsive Layout"]
-        },
-        {
-            "name": "Pro Business Package",
-            "price": "$20",
-            "features": ["Up to 5 Pages", "Responsive Layout", "Contact Form", "Small API Integration"]
-        },
-        {
-            "name": "Premium Business Package",
-            "price": "$40",
-            "features": ["Unlimited Pages", "Responsive Layout", "E-commerce Integration", "Contact Form", "Any API integration"]
-        },
-        {
-            "name": "Already made a site but want me to add or edit something",
-            "price": "$3",
-            "features": ["Add up to 1 extra Page", "Redesign", "You provide me with the files HTML, JavaScript, and CSS only"]
-        }
+        { name: "Starter Package", price: "$10", features: ["1 - 2 Page Design", "Responsive Layout"] },
+        { name: "Pro Business Package", price: "$20", features: ["Up to 5 Pages", "Responsive Layout", "Contact Form", "Small API Integration"] },
+        { name: "Premium Business Package", price: "$40", features: ["Unlimited Pages", "Responsive Layout", "E-commerce Integration", "Contact Form", "Any API integration"] },
+        { name: "Already made a site but want me to add or edit something", price: "$3", features: ["Add up to 1 extra Page", "Redesign", "You provide me with the files HTML, JavaScript, and CSS only"] }
     ];
 
-    console.log('Plans:', plans);
-
-    // Loop through the plans and create HTML for each
     plans.forEach(plan => {
         const planDiv = document.createElement('div');
         planDiv.classList.add('plan');
 
-        // Add plan details
-        planDiv.innerHTML = `
-            <h3>${plan.name}</h3>
-            <p class="price">${plan.price}</p>
-            <ul class="features">
-                ${plan.features.map(feature => `<li>${feature}</li>`).join('')}
-            </ul>
-        `;
+        const planName = document.createElement('h3');
+        planName.textContent = plan.name;
+        planDiv.appendChild(planName);
 
-        // Append the plan to the container
+        const planPrice = document.createElement('p');
+        planPrice.classList.add('price');
+        planPrice.textContent = plan.price;
+        planDiv.appendChild(planPrice);
+
+        const featuresList = document.createElement('ul');
+        featuresList.classList.add('features');
+        plan.features.forEach(feature => {
+            const featureItem = document.createElement('li');
+            featureItem.textContent = feature;
+            featuresList.appendChild(featureItem);
+        });
+        planDiv.appendChild(featuresList);
+
         plansContainer.appendChild(planDiv);
     });
 });
