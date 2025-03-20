@@ -133,7 +133,7 @@ body::-webkit-scrollbar-thumb:hover {
     font-size: 40px;
     font-weight: bold;
     text-align: center;
-    margin: 0; /* Remove any default margin */
+    margin-top: 400px; /* Remove any default margin */
     position: relative; /* Required for animation */
     animation: fade-in-from-top 2s ease-out forwards, glow 1.5s infinite alternate; /* Combine fade-in and glow animations */
 }
@@ -203,7 +203,7 @@ body::-webkit-scrollbar-thumb:hover {
     font-weight: bold;
     color: #f700ff;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 50px;
     white-space: nowrap; /* Prevent text wrapping */
     overflow: hidden; /* Hide overflowing text */
     display: inline-block;
@@ -212,6 +212,158 @@ body::-webkit-scrollbar-thumb:hover {
 #dynamic-text {
     border-right: 2px solid #ff04ea; /* Add a blinking cursor effect */
     animation: blink 0.7s step-end infinite; /* Blinking cursor */
+}
+
+.start {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px 30px;
+    color: #ffffff;
+    background: linear-gradient(45deg, #ff04ea, #cb32fa, #6a00ff);
+    background-size: 300% 300%; /* Animate the gradient */
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #ff04ea, 0 0 40px #cb32fa, 0 0 60px #6a00ff; /* Glowing effect */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase; /* Make text uppercase for a bold look */
+    letter-spacing: 5px; /* Add spacing between letters */
+    animation: gradient-animation 3s ease infinite, pulse 2s infinite; /* Add gradient animation and pulse */
+}
+
+.start:hover {
+    background-position: 100% 0; /* Shift the gradient on hover */
+    box-shadow: 0 0 30px #ff04ea, 0 0 60px #cb32fa, 0 0 90px #6a00ff; /* Intensify glow on hover */
+    transform: scale(1.15)  /* Slightly enlarge and tilt the button */
+}
+
+.start:active {
+    transform: scale(1.05); /* Slightly shrink when clicked */
+    box-shadow: 0 0 15px #ff04ea, 0 0 30px #cb32fa; /* Reduce glow when clicked */
+}
+
+.about {
+    position: relative;
+    padding: 30px 50px; /* Add generous padding for a spacious look */
+    background: linear-gradient(135deg, #ff04ea, #6a00ff, #cb32fa); /* Vibrant gradient background */
+    color: #ffffff; /* Ensure text is visible */
+    text-align: center; /* Center-align the text */
+    margin: 600px auto 50px; /* Add space above to avoid the navbar */
+    width: 80%; /* Make it responsive */
+    max-width: 600px; /* Limit the width for larger screens */
+    border-radius: 20px; /* Add rounded corners for a modern look */
+    box-shadow: 0 0 30px rgba(255, 4, 234, 0.8), 0 0 60px rgba(107, 50, 250, 0.6); /* Glowing shadow */
+    overflow: visible; /* Ensure no content is cut off */
+    animation: float 3s ease-in-out infinite; /* Add a floating animation */
+    border: 3px solid rgba(255, 255, 255, 0.2); /* Semi-transparent border */
+}
+
+/* Add a glowing border animation */
+.about::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 25px;
+    background: linear-gradient(45deg, #ff04ea, #cb32fa, #6a00ff, #ff04ea);
+    z-index: -1;
+    filter: blur(15px);
+    animation: glowing-border 6s linear infinite;
+}
+
+/* Add a floating animation */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Glowing border animation */
+@keyframes glowing-border {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Add text styling inside the modal */
+.about h2 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-shadow: 0 0 10px #ff04ea, 0 0 20px #cb32fa;
+}
+
+.about p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    margin-bottom: 20px;
+}
+
+/* Add a button inside the modal */
+.about .cta-button {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(45deg, #ff04ea, #cb32fa);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #ff04ea, 0 0 30px #cb32fa;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-in-out;
+}
+
+.about .cta-button:hover {
+    background: linear-gradient(45deg, #cb32fa, #ff04ea);
+    box-shadow: 0 0 20px #ff04ea, 0 0 40px #cb32fa;
+    transform: scale(1.1);
+}
+
+/* Gradient Animation */
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Pulsating Glow Animation */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 20px #ff04ea, 0 0 40px #cb32fa, 0 0 60px #6a00ff;
+    }
+    50% {
+        box-shadow: 0 0 30px #ff04ea, 0 0 60px #cb32fa, 0 0 90px #6a00ff;
+    }
+    100% {
+        box-shadow: 0 0 20px #ff04ea, 0 0 40px #cb32fa, 0 0 60px #6a00ff;
+    }
 }
 
 /* Blinking Cursor Effect */
@@ -248,4 +400,137 @@ body::-webkit-scrollbar-thumb:hover {
     85%, 100% {
         content: "Success"; /* Fifth word */
     }
+}
+
+/* Code Rain Effect */
+@keyframes code-rain {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+.code-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    overflow: hidden;
+    z-index: 9999; /* Ensure it appears above everything */
+    display: none; /* Initially hidden */
+}
+
+.code-rain span {
+    position: absolute;
+    top: 0;
+    font-family: monospace;
+    font-size: 20px;
+    color: #00ff00;
+    animation: code-rain 3s linear infinite;
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Testimonials Section */
+.testimonials {
+    background-color: #000000; /* Black background for terminal look */
+    color: #00ff00; /* Green text for hacker style */
+    font-family: 'Courier New', Courier, monospace; /* Monospace font for terminal feel */
+    padding: 20px;
+    margin-top: 200px;
+    width: 80%;
+    max-width: 600px;
+    border: 2px solid #00ff00; /* Green border for terminal frame */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); /* Glowing green shadow */
+    text-align: left; /* Align text to the left */
+}
+
+/* Testimonials Heading */
+.testimonials h2 {
+    font-size: 24px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00; /* Glowing text effect */
+    border-bottom: 1px solid #00ff00; /* Underline for separation */
+    padding-bottom: 10px;
+}
+
+/* Individual Testimonial */
+.testimonial {
+    margin-bottom: 20px;
+    padding-left: 10px; /* Indent for terminal-style text */
+}
+
+.testimonial p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.testimonial .user {
+    color: #00ff00; /* Highlight usernames */
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ff00; /* Slight glow for usernames */
+}
+
+.header {
+    color: #ffffff; /* Ensure the text is visible */
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 00px; /* Remove any default margin */
+    position: relative; /* Required for animation */
+    animation: fade-in-from-top 2s ease-out forwards, glow 1.5s infinite alternate; /* Combine fade-in and glow animations */
+}
+
+.plans {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin: 50px auto;
+    padding: 20px;
+    max-width: 1200px;
+}
+
+.plan {
+    background: linear-gradient(135deg, #ff04ea, #6a00ff);
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.plan:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+}
+
+.plan h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.plan .price {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.plan .features {
+    list-style: none;
+    padding: 0;
+}
+
+.plan .features li {
+    margin: 5px 0;
 }
