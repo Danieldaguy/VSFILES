@@ -98,11 +98,67 @@ document.addEventListener('DOMContentLoaded', () => {
     plansContainer.innerHTML = ''; // Ensure the fallback message is removed
 
     const plans = [
-        { name: "Starter Package", price: "$60", features: ["1 - 2 Page Design", "Responsive Layout","Good For Landing Page"] },
-        { name: "Premium Package", price: "$100", features: ["Up to 5 Pages", "Responsive Layout", "Contact Form Able to be added", "Small API Integration"] },
-        { name: "Business Package", price: "$40", features: ["Up to 30 Pages", "Responsive Layout", "E-commerce Integration", "Contact Form Able to be added", "Any API integration"] },
-        { name: "Already Have a site, but you want me to add or edit something?", price: "$15", features: ["Add up to 1 extra Page", "Redesign", "You provide me with the files HTML, JavaScript, and CSS only"] }
-    ];
+    { 
+        name: "Starter Package", 
+        price: "$75", 
+        features: [
+            "1 - 2 Page Design", 
+            "Responsive Layout", 
+            "Basic SEO Optimization (Title, Meta Tags)", 
+            "Mobile-Friendly Design", 
+            "1 Free Revision", 
+            "Fast Loading Speed Optimization", 
+            "Good for Landing Pages and Single-Page Sites"
+        ] 
+    },
+    { 
+        name: "Premium Package", 
+        price: "$150", 
+        features: [
+            "Up to 5 Pages", 
+            "Responsive Layout", 
+            "Contact Form Integration", 
+            "Small API Integration", 
+            "Intermediate SEO Optimization (Title, Meta Tags, Alt Tags, Structured Data)", 
+            "2 Free Revisions", 
+            "Custom Animations (Hover Effects, Smooth Scroll, etc.)", 
+            "Image Optimization for Faster Loading", 
+            "Google Fonts & Custom Typography Options",
+            "Ideal for Small Businesses, Portfolios, and Informational Sites"
+        ] 
+    },
+    { 
+        name: "Business Package", 
+        price: "$500", 
+        features: [
+            "Up to 30 Pages", 
+            "Responsive Layout", 
+            "E-commerce Integration (Basic Store Setup)", 
+            "Advanced Contact Forms", 
+            "Any API Integration", 
+            "Advanced SEO Optimization (Title, Meta Tags, Schema Markup, Page Speed)", 
+            "3 Free Revisions", 
+            "Advanced Animations & Interactions", 
+            "Database Connection Setup (If Needed)", 
+            "Security Best Practices (Basic Anti-Spam & Protection)", 
+            "Performance Optimization (Lazy Loading, Caching Setup)",
+            "Ideal for Comprehensive Business Websites and E-commerce Platforms"
+        ] 
+    },
+    { 
+        name: "Already Have a Site? Need Edits?", 
+        price: "$30+", 
+        features: [
+            "Add up to 1 Extra Page", 
+            "Redesign Existing Pages", 
+            "Bug Fixing & Code Cleanup", 
+            "Mobile Responsiveness Fixes", 
+            "Speed Optimization", 
+            "You Provide HTML, JavaScript, and CSS Files",
+            "Perfect for Enhancing and Updating Existing Websites"
+        ] 
+    }
+];
 
     plans.forEach((plan, index) => {
         const planDiv = document.createElement('div');
