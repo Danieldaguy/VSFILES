@@ -11,25 +11,31 @@ export default async function handler(req, res) {
         const transporter = nodemailer.createTransport({
             service: 'gmail', // Use your email provider (e.g., Gmail, Outlook, etc.)
             auth: {
-                user: 'danielgyebi17@gmail.com', // Replace with your email
-                pass: 'yzyy bfom fzon onen', // Replace with your email password or app-specific password
+                user: process.env.EMAIL_USER, // Your email address (set in Vercel environment variables)
+                pass: process.env.EMAIL_PASS, // Your email password or app-specific password (set in Vercel environment variables)
             },
         });
 
         // Email content
         const mailOptions = {
-            from: 'dnaiel.gyebi640@gmail.com', // Sender address
-            to: 'danielgyebi17@gmail.com', // Your email address to receive submissions
+            from: process.env.EMAIL_USER, // Sender address
+            to: process.env.EMAIL_USER, // Your email address to receive submissions
             subject: `New Form Submission: ${formData.planName}`,
-            text: `
-                You have received a new form submission:
-                
-                Plan Name: ${formData.planName}
-                Name: ${formData.userName}
-                Email: ${formData.userEmail}
-                Message: ${formData.userMessage}
-                Payment Method: ${formData.paymentMethod}
-                Contact Method: ${formData.userContactMethod}
+            html: `
+                <h1>New Form Submission</h1>
+                <p><strong>Plan Name:</strong> ${formData.planName}</p>
+                <p><strong>Name:</strong> ${formData.userName}</p>
+                <p><strong>Email:</strong> ${formData.userEmail}</p>
+                <p><strong>Message:</strong> ${formData.userMessage}</p>
+                <p><strong>Payment Method:</strong> ${formData.paymentMethod}</p>
+                <p><strong>Contact Method:</strong> ${formData.userContactMethod}</p>
+                ${formData.cashTag ? `<p><strong>CashApp Tag:</strong> ${formData.cashTag}</p>` : ''}
+                ${formData.phoneNumber ? `<p><strong>Phone Number:</strong> ${formData.phoneNumber}</p>` : ''}
+                ${formData.discordUsername ? `<p><strong>Discord Username:</strong> ${formData.discordUsername}</p>` : ''}
+                ${formData.redditUsername ? `<p><strong>Reddit Username:</strong> ${formData.redditUsername}</p>` : ''}
+                ${formData.additionalNotes ? `<p><strong>Additional Notes:</strong> ${formData.additionalNotes}</p>` : ''}
+                <hr>
+                <p><strong>Submission Timestamp:</strong> ${new Date().toLocaleString()}</p>
             `,
         };
 

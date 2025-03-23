@@ -298,6 +298,12 @@ document.addEventListener('DOMContentLoaded', () => {
         contactInput.style.display = 'none'; // Initially hidden
         form.appendChild(contactInput);
 
+        const additionalNotesField = document.createElement('textarea');
+        additionalNotesField.name = 'additionalNotes';
+        additionalNotesField.id = 'additional-notes';
+        additionalNotesField.placeholder = 'Additional notes or comments (optional)';
+        form.appendChild(additionalNotesField);
+
         contactDropdown.addEventListener('change', () => {
             if (contactDropdown.value === 'text') {
                 contactInput.style.display = 'block';
@@ -335,19 +341,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add the form to the DOM
         plansContainer.appendChild(form);
 
-        // Handle form submission
         form.addEventListener('submit', (event) => {
             event.preventDefault();
-
+        
             // Validate message field for at least 5 sentences
             const message = messageField.value.trim();
             const sentenceCount = message.split(/[.!?]/).filter(sentence => sentence.trim().length > 0).length;
-
+        
             if (sentenceCount < 5) {
                 alert('Your message must contain at least 5 sentences. Please provide more details.');
                 return;
             }
-
+        
             if (nameField.value && emailField.value && paymentDropdown.value && contactDropdown.value) {
                 const formData = {
                     planName: packageNameField.value,
@@ -356,10 +361,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     userMessage: messageField.value,
                     paymentMethod: paymentDropdown.value,
                     userContactMethod: contactDropdown.value,
+                    cashTag: paymentDropdown.value === 'cashapp' ? cashAppInput.value : '',
+                    phoneNumber: contactDropdown.value === 'text' ? contactInput.value : '',
+                    discordUsername: contactDropdown.value === 'discord' ? contactInput.value : '',
+                    redditUsername: contactDropdown.value === 'reddit' ? contactInput.value : '',
+                    additionalNotes: document.getElementById('additional-notes')?.value || '', // Optional additional notes field
                 };
-
+        
                 console.log('Form Data:', formData); // Debugging log
-
+        
                 // Send form data to the serverless function
                 fetch('/api/submit-form', {
                     method: 'POST',
