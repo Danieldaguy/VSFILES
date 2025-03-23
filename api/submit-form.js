@@ -7,6 +7,37 @@ export default async function handler(req, res) {
         // Log the form data for debugging
         console.log('Form Data Received:', formData);
 
+        // Base package prices
+        const packagePrices = {
+            "Starter Package": 75,
+            "Premium Package": 150,
+            "Business Package": 500,
+            "Already Have a Site? Need Edits?": 30,
+        };
+
+        // Extract the base price of the selected package
+        const basePrice = packagePrices[formData.planName] || 0;
+
+        // Calculate the total price by adding the base price and the prices of selected extra features
+        const extraFeaturePrices = {
+            "1 Free Extra Revision": 25,
+            "Express Delivery": 100,
+            "Additional Page": 40,
+            "Advanced Animation": 75,
+            "Logo Design": 80,
+            "Favicon Design": 60,
+            "Better SEO": 20,
+            "Blog/Newsletter": 40,
+            "Sign Up Page": 50,
+        };
+
+        const extraFeaturesTotal = formData.extraFeatures.reduce((total, feature) => {
+            const featureName = feature.split(" (")[0]; // Extract the feature name
+            return total + (extraFeaturePrices[featureName] || 0);
+        }, 0);
+
+        const totalPrice = basePrice + extraFeaturesTotal;
+
         // Create a Nodemailer transporter
         const transporter = nodemailer.createTransport({
             service: 'gmail', // Use your email provider (e.g., Gmail, Outlook, etc.)
@@ -43,6 +74,11 @@ export default async function handler(req, res) {
                 <h2>Additional Information</h2>
                 <p><strong>Extra Features Selected:</strong> ${formData.extraFeatures.length > 0 ? formData.extraFeatures.join(', ') : 'None'}</p>
                 ${formData.additionalNotes ? `<p><strong>Additional Notes:</strong> ${formData.additionalNotes}</p>` : ''}
+                <hr>
+                <h2>Pricing Summary</h2>
+                <p><strong>Base Package Price:</strong> $${basePrice}</p>
+                <p><strong>Extra Features Total:</strong> $${extraFeaturesTotal}</p>
+                <p><strong>Total Price:</strong> $${totalPrice}</p>
                 <hr>
                 <p><strong>Submission Timestamp:</strong> ${new Date().toLocaleString()}</p>
                 <p><strong>IP Address:</strong> ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</p>
