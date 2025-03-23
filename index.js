@@ -98,10 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
     plansContainer.innerHTML = ''; // Ensure the fallback message is removed
 
     const plans = [
-        { name: "Starter Package", price: "$10", features: ["1 - 2 Page Design", "Responsive Layout"] },
-        { name: "Pro Business Package", price: "$20", features: ["Up to 5 Pages", "Responsive Layout", "Contact Form", "Small API Integration"] },
-        { name: "Premium Business Package", price: "$40", features: ["Unlimited Pages", "Responsive Layout", "E-commerce Integration", "Contact Form", "Any API integration"] },
-        { name: "Already made a site but want me to add or edit something", price: "$3", features: ["Add up to 1 extra Page", "Redesign", "You provide me with the files HTML, JavaScript, and CSS only"] }
+        { name: "Starter Package", price: "$60", features: ["1 - 2 Page Design", "Responsive Layout","Good For Landing Page"] },
+        { name: "Premium Package", price: "$100", features: ["Up to 5 Pages", "Responsive Layout", "Contact Form Able to be added", "Small API Integration"] },
+        { name: "Business Package", price: "$40", features: ["Up to 30 Pages", "Responsive Layout", "E-commerce Integration", "Contact Form Able to be added", "Any API integration"] },
+        { name: "Already Have a site, but you want me to add or edit something?", price: "$15", features: ["Add up to 1 extra Page", "Redesign", "You provide me with the files HTML, JavaScript, and CSS only"] }
     ];
 
     plans.forEach((plan, index) => {
@@ -370,6 +370,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
                 console.log('Form Data:', formData); // Debugging log
         
+                // Generate a unique donation code if the payment method is "Donation"
+                let donationCode = null;
+                if (formData.paymentMethod === 'donation') {
+                    donationCode = `DON-${Math.random().toString(36).substr(2, 8).toUpperCase()}`;
+                    console.log('Generated Donation Code:', donationCode);
+                }
+        
                 // Send form data to the serverless function
                 fetch('/api/submit-form', {
                     method: 'POST',
@@ -382,14 +389,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then((data) => {
                         console.log('Server Response:', data);
         
-                        // Show the modal with a success message
+                        // Show the modal with a success message and donation code (if applicable)
                         showModal(`
                             <h2>Form Submitted Successfully!</h2>
                             <p>Thank you, <strong>${formData.userName}</strong>, for submitting your form.</p>
                             <p>We will contact you via <strong>${formData.userContactMethod}</strong> soon.</p>
                             <p><strong>Plan Selected:</strong> ${formData.planName}</p>
                             <p><strong>Message:</strong> ${formData.userMessage}</p>
-                        `);
+                        `, donationCode);
         
                         // Optionally, reset the form after submission
                         form.reset();
@@ -407,27 +414,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function showModal(content) {
+    function showModal(content, donationCode = null) {
         // Remove any existing modal
         const existingModal = document.querySelector('.modal');
         if (existingModal) {
             existingModal.remove();
         }
-
+    
         // Create modal elements
         const modal = document.createElement('div');
         modal.classList.add('modal');
-
+    
         const modalContent = document.createElement('div');
         modalContent.classList.add('modal-content');
         modalContent.innerHTML = content;
-
+    
+        // If a donation code is provided, display it in the modal
+        if (donationCode) {
+            const donationCodeElement = document.createElement('p');
+            donationCodeElement.innerHTML = `<strong>Your Donation Code:</strong> ${donationCode}`;
+            modalContent.appendChild(donationCodeElement);
+        }
+    
         const closeModalButton = document.createElement('button');
         closeModalButton.textContent = 'Close';
         closeModalButton.addEventListener('click', () => {
             modal.remove();
         });
-
+    
         modalContent.appendChild(closeModalButton);
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
