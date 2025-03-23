@@ -22,20 +22,31 @@ export default async function handler(req, res) {
             to: process.env.EMAIL_USER, // Your email address to receive submissions
             subject: `New Form Submission: ${formData.planName}`,
             html: `
-                <h1>New Form Submission</h1>
+                <h1>New Form Submission Details</h1>
                 <p><strong>Plan Name:</strong> ${formData.planName}</p>
-                <p><strong>Name:</strong> ${formData.userName}</p>
-                <p><strong>Email:</strong> ${formData.userEmail}</p>
-                <p><strong>Website Description:</strong> ${formData.userMessage}</p>
+                <p><strong>Customer Name:</strong> ${formData.userName}</p>
+                <p><strong>Customer Email:</strong> ${formData.userEmail}</p>
+                <p><strong>Message:</strong></p>
+                <blockquote>${formData.userMessage}</blockquote>
+                <hr>
+                <h2>Payment Information</h2>
                 <p><strong>Payment Method:</strong> ${formData.paymentMethod}</p>
-                <p><strong>Contact Method:</strong> ${formData.userContactMethod}</p>
                 ${formData.cashTag ? `<p><strong>CashApp Tag:</strong> ${formData.cashTag}</p>` : ''}
+                ${formData.paymentMethod === 'donation' ? `<p><strong>Donation Code:</strong> DON-${Math.random().toString(36).substr(2, 8).toUpperCase()}</p>` : ''}
+                <hr>
+                <h2>Contact Preferences</h2>
+                <p><strong>Preferred Contact Method:</strong> ${formData.userContactMethod}</p>
                 ${formData.phoneNumber ? `<p><strong>Phone Number:</strong> ${formData.phoneNumber}</p>` : ''}
                 ${formData.discordUsername ? `<p><strong>Discord Username:</strong> ${formData.discordUsername}</p>` : ''}
                 ${formData.redditUsername ? `<p><strong>Reddit Username:</strong> ${formData.redditUsername}</p>` : ''}
+                <hr>
+                <h2>Additional Information</h2>
+                <p><strong>Extra Features Selected:</strong> ${formData.extraFeatures.length > 0 ? formData.extraFeatures.join(', ') : 'None'}</p>
                 ${formData.additionalNotes ? `<p><strong>Additional Notes:</strong> ${formData.additionalNotes}</p>` : ''}
                 <hr>
                 <p><strong>Submission Timestamp:</strong> ${new Date().toLocaleString()}</p>
+                <p><strong>IP Address:</strong> ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</p>
+                <p><strong>User Agent:</strong> ${req.headers['user-agent']}</p>
             `,
         };
 

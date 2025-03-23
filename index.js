@@ -380,6 +380,50 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Inside the openForm function
+        const extraFeaturesLabel = document.createElement('label');
+        extraFeaturesLabel.textContent = "Select Extra Features (Optional)";
+        extraFeaturesLabel.setAttribute('for', 'extra-features');
+        form.appendChild(extraFeaturesLabel);
+
+        const extraFeaturesContainer = document.createElement('div');
+        extraFeaturesContainer.id = 'extra-features-container';
+
+        // List of extra features
+        const extraFeatures = [
+            { name: "1 Free Extra Revision", price: "$25" },
+            { name: "Express Delivery", price: "$100" },
+            { name: "Additional Page", price: "$40" },
+            { name: "Advanced Animation", price: "$75" },
+            { name: "Logo Design", price: "$80" },
+            { name: "Favicon Design", price: "$60" },
+            { name: "Better SEO", price: "$20" },
+            { name: "Blog/Newsletter", price: "$40" },
+            { name: "Sign Up Page", price: "$50" },
+        ];
+
+        // Populate the container with checkboxes for extra features
+        extraFeatures.forEach(feature => {
+            const featureWrapper = document.createElement('div');
+            featureWrapper.classList.add('feature-item');
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.name = 'extraFeatures';
+            checkbox.value = `${feature.name} (${feature.price})`;
+            checkbox.id = `feature-${feature.name.replace(/\s+/g, '-').toLowerCase()}`;
+
+            const label = document.createElement('label');
+            label.setAttribute('for', checkbox.id);
+            label.textContent = `${feature.name} - ${feature.price}`;
+
+            featureWrapper.appendChild(checkbox);
+            featureWrapper.appendChild(label);
+            extraFeaturesContainer.appendChild(featureWrapper);
+        });
+
+        form.appendChild(extraFeaturesContainer);
+
         const submitButton = document.createElement('button');
         submitButton.type = 'submit';
         submitButton.textContent = 'Submit';
@@ -410,6 +454,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         
             if (nameField.value && emailField.value && paymentDropdown.value && contactDropdown.value) {
+                const selectedFeatures = Array.from(document.querySelectorAll('#extra-features-container input:checked')).map(checkbox => checkbox.value);
+        
                 const formData = {
                     planName: packageNameField.value,
                     userName: nameField.value,
@@ -422,6 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     discordUsername: contactDropdown.value === 'discord' ? contactInput.value : '',
                     redditUsername: contactDropdown.value === 'reddit' ? contactInput.value : '',
                     additionalNotes: document.getElementById('additional-notes')?.value || '', // Optional additional notes field
+                    extraFeatures: selectedFeatures, // Include selected extra features
                 };
         
                 console.log('Form Data:', formData); // Debugging log
@@ -452,6 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <p>We will contact you via <strong>${formData.userContactMethod}</strong> soon.</p>
                             <p><strong>Plan Selected:</strong> ${formData.planName}</p>
                             <p><strong>Message:</strong> ${formData.userMessage}</p>
+                            <p><strong>Extra Features:</strong> ${selectedFeatures.length > 0 ? selectedFeatures.join(', ') : 'None'}</p>
                         `, donationCode);
         
                         // Optionally, reset the form after submission
