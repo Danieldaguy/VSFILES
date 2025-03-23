@@ -381,7 +381,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then((response) => response.json())
                     .then((data) => {
                         console.log('Server Response:', data);
-                        alert('Your form has been submitted successfully!');
+        
+                        // Show the modal with a success message
+                        showModal(`
+                            <h2>Form Submitted Successfully!</h2>
+                            <p>Thank you, <strong>${formData.userName}</strong>, for submitting your form.</p>
+                            <p>We will contact you via <strong>${formData.userContactMethod}</strong> soon.</p>
+                            <p><strong>Plan Selected:</strong> ${formData.planName}</p>
+                            <p><strong>Message:</strong> ${formData.userMessage}</p>
+                        `);
+        
+                        // Optionally, reset the form after submission
+                        form.reset();
+                        contactInput.style.display = 'none'; // Hide conditional input
+                        cashAppInput.style.display = 'none'; // Hide CashApp input
+                        donationMessage.style.display = 'none'; // Hide donation message
                     })
                     .catch((error) => {
                         console.error('Error submitting form:', error);

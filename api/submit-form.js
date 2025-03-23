@@ -26,7 +26,7 @@ export default async function handler(req, res) {
                 <p><strong>Plan Name:</strong> ${formData.planName}</p>
                 <p><strong>Name:</strong> ${formData.userName}</p>
                 <p><strong>Email:</strong> ${formData.userEmail}</p>
-                <p><strong>Message:</strong> ${formData.userMessage}</p>
+                <p><strong>Website Description:</strong> ${formData.userMessage}</p>
                 <p><strong>Payment Method:</strong> ${formData.paymentMethod}</p>
                 <p><strong>Contact Method:</strong> ${formData.userContactMethod}</p>
                 ${formData.cashTag ? `<p><strong>CashApp Tag:</strong> ${formData.cashTag}</p>` : ''}
