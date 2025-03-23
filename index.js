@@ -348,29 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const modal = document.createElement('div');
-            modal.classList.add('modal');
-            const modalContent = document.createElement('div');
-            modalContent.classList.add('modal-content');
-
             if (nameField.value && emailField.value && paymentDropdown.value && contactDropdown.value) {
-                let contactInfo = '';
-                let userContactInfo = contactInput.value || 'Not provided';
-                switch (contactDropdown.value) {
-                    case 'text':
-                        contactInfo = 'Phone Number: +19453011286';
-                        break;
-                    case 'email':
-                        contactInfo = 'Email: danielgyebi17@gmail.com';
-                        break;
-                    case 'discord':
-                        contactInfo = 'Discord: danielthestarha3794';
-                        break;
-                    case 'reddit':
-                        contactInfo = 'Reddit: u/key_bad4337';
-                        break;
-                }
-
                 const formData = {
                     planName: packageNameField.value,
                     userName: nameField.value,
@@ -378,54 +356,57 @@ document.addEventListener('DOMContentLoaded', () => {
                     userMessage: messageField.value,
                     paymentMethod: paymentDropdown.value,
                     userContactMethod: contactDropdown.value,
-                    userContactInfo: userContactInfo,
-                    contactInfo: contactInfo,
                 };
 
                 console.log('Form Data:', formData); // Debugging log
 
-                if (paymentDropdown.value === 'donation') {
-                    const uniqueCode = `DON-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
-                    formData.uniqueCode = uniqueCode;
-                    modalContent.innerHTML = `
-                        <p>Thank you for your submission!</p>
-                        <p>Your unique donation code is: <strong>${uniqueCode}</strong></p>
-                        <p>Please use this code in your donation message.</p>
-                        <p>We will contact you via ${contactDropdown.value}:</p>
-                        <p><strong>Our Contact Info:</strong> ${contactInfo}</p>
-                        <p><strong>Your Contact Info:</strong> ${userContactInfo}</p>
-                    `;
-                } else {
-                    modalContent.innerHTML = `
-                        <p>Thank you for your submission!</p>
-                        <p>We will contact you via ${contactDropdown.value}:</p>
-                        <p><strong>Our Contact Info:</strong> ${contactInfo}</p>
-                        <p><strong>Your Contact Info:</strong> ${userContactInfo}</p>
-                    `;
-                }
-
-                // Send email using EmailJS
-                emailjs.send('service_l9wkil9', 'template_475vv7n', formData)
-                    .then(() => {
-                        console.log('Email sent successfully!');
+                // Send form data to the serverless function
+                fetch('/api/submit-form', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log('Server Response:', data);
+                        alert('Your form has been submitted successfully!');
                     })
                     .catch((error) => {
-                        console.error('Error sending email:', error);
-                        alert('There was an error sending your email. Please try again later.');
+                        console.error('Error submitting form:', error);
+                        alert('There was an error submitting your form. Please try again later.');
                     });
             } else {
-                modalContent.innerHTML = `<p>Form submission failed. Please fill out all required fields.</p>`;
+                alert('Please fill out all required fields.');
             }
-
-            const closeModalButton = document.createElement('button');
-            closeModalButton.textContent = 'Close';
-            closeModalButton.addEventListener('click', () => {
-                modal.remove();
-            });
-            modalContent.appendChild(closeModalButton);
-            modal.appendChild(modalContent);
-            document.body.appendChild(modal);
         });
+    }
+
+    function showModal(content) {
+        // Remove any existing modal
+        const existingModal = document.querySelector('.modal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+
+        // Create modal elements
+        const modal = document.createElement('div');
+        modal.classList.add('modal');
+
+        const modalContent = document.createElement('div');
+        modalContent.classList.add('modal-content');
+        modalContent.innerHTML = content;
+
+        const closeModalButton = document.createElement('button');
+        closeModalButton.textContent = 'Close';
+        closeModalButton.addEventListener('click', () => {
+            modal.remove();
+        });
+
+        modalContent.appendChild(closeModalButton);
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
     }
 
     console.log('Plans successfully added to the container.');
