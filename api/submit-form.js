@@ -54,35 +54,36 @@ export default async function handler(req, res) {
             subject: `New Form Submission: ${formData.planName}`,
             html: `
                 <h1>New Form Submission Details</h1>
-                <p><strong>Plan Name:</strong> ${formData.planName}</p>
+                <h2>Customer Information</h2>
                 <p><strong>Customer Name:</strong> ${formData.userName}</p>
                 <p><strong>Customer Email:</strong> ${formData.userEmail}</p>
-                <p><strong>Message:</strong></p>
-                <blockquote>${formData.userMessage}</blockquote>
+                <p><strong>Preferred Contact Method:</strong> ${formData.userContactMethod}</p>
+                ${formData.phoneNumber ? `<p><strong>Phone Number:</strong> ${formData.phoneNumber}</p>` : ''}
+                ${formData.discordUsername ? `<p><strong>Discord Username:</strong> ${formData.discordUsername}</p>` : ''}
+                ${formData.redditUsername ? `<p><strong>Reddit Username:</strong> ${formData.redditUsername}</p>` : ''}
+                <hr>
+                <h2>Plan Details</h2>
+                <p><strong>Selected Plan:</strong> ${formData.planName}</p>
+                <p><strong>Base Package Price:</strong> $${basePrice}</p>
+                <p><strong>Extra Features Selected:</strong> ${formData.extraFeatures.length > 0 ? formData.extraFeatures.join(', ') : 'None'}</p>
+                <p><strong>Extra Features Total:</strong> $${extraFeaturesTotal}</p>
+                <p><strong>Total Price:</strong> $${totalPrice}</p>
                 <hr>
                 <h2>Payment Information</h2>
                 <p><strong>Payment Method:</strong> ${formData.paymentMethod}</p>
                 ${formData.cashTag ? `<p><strong>CashApp Tag:</strong> ${formData.cashTag}</p>` : ''}
                 ${formData.paymentMethod === 'donation' ? `<p><strong>Donation Code:</strong> DON-${Math.random().toString(36).substr(2, 8).toUpperCase()}</p>` : ''}
                 <hr>
-                <h2>Contact Preferences</h2>
-                <p><strong>Preferred Contact Method:</strong> ${formData.userContactMethod}</p>
-                ${formData.phoneNumber ? `<p><strong>Phone Number:</strong> ${formData.phoneNumber}</p>` : ''}
-                ${formData.discordUsername ? `<p><strong>Discord Username:</strong> ${formData.discordUsername}</p>` : ''}
-                ${formData.redditUsername ? `<p><strong>Reddit Username:</strong> ${formData.redditUsername}</p>` : ''}
-                <hr>
-                <h2>Additional Information</h2>
-                <p><strong>Extra Features Selected:</strong> ${formData.extraFeatures.length > 0 ? formData.extraFeatures.join(', ') : 'None'}</p>
+                <h2>Message from Customer</h2>
+                <blockquote>${formData.userMessage}</blockquote>
                 ${formData.additionalNotes ? `<p><strong>Additional Notes:</strong> ${formData.additionalNotes}</p>` : ''}
                 <hr>
-                <h2>Pricing Summary</h2>
-                <p><strong>Base Package Price:</strong> $${basePrice}</p>
-                <p><strong>Extra Features Total:</strong> $${extraFeaturesTotal}</p>
-                <p><strong>Total Price:</strong> $${totalPrice}</p>
-                <hr>
+                <h2>Submission Metadata</h2>
                 <p><strong>Submission Timestamp:</strong> ${new Date().toLocaleString()}</p>
                 <p><strong>IP Address:</strong> ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</p>
                 <p><strong>User Agent:</strong> ${req.headers['user-agent']}</p>
+                <p><strong>Referrer:</strong> ${req.headers['referer'] || 'N/A'}</p>
+                <p><strong>Host:</strong> ${req.headers['host']}</p>
             `,
         };
 
